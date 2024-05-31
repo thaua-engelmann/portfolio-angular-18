@@ -31,6 +31,11 @@
         "{workspaceRoot}/.eslintignore",
         "{workspaceRoot}/eslint.config.js"
       ]
+    },
+    "@angular-devkit/build-angular:application": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
     }
   },
   "defaultBase": "master",
@@ -57,6 +62,30 @@
     },
     "@nx/angular:component": {
       "style": "sass"
+    },
+    "@nx/angular:application": {
+      "e2eTestRunner": "cypress",
+      "linter": "eslint",
+      "style": "sass",
+      "unitTestRunner": "jest"
     }
-  }
+  },
+  "plugins": [
+    {
+      "plugin": "@nx/cypress/plugin",
+      "options": {
+        "targetName": "e2e",
+        "openTargetName": "open-cypress",
+        "componentTestingTargetName": "component-test",
+        "ciTargetName": "e2e-ci"
+      }
+    },
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint",
+        "extensions": ["ts", "tsx", "js", "jsx", "html", "vue"]
+      }
+    }
+  ]
 }
